@@ -46,6 +46,7 @@ RUN wget https://github.com/cdr/code-server/releases/download/3.2.0/code-server-
 
 RUN curl -sL https://deb.nodesource.com/setup_12.x | bash -
 RUN apt install -y nodejs
+RUN npm install -g firebase-tools
 
 RUN apt install -y php-cgi php-mbstring php-gd php-xml php-cli php-curl php-mysql php-imagick php-pgsql php-zip php-redis && \
 	curl -sS https://getcomposer.org/installer -o composer-setup.php && \
