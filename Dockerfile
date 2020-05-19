@@ -37,10 +37,10 @@ RUN curl -SsL https://github.com/boxboat/fixuid/releases/download/v0.4/fixuid-0.
     mkdir -p /etc/fixuid && \
     printf "user: coder\ngroup: coder\n" > /etc/fixuid/config.yml
 
-RUN wget https://github.com/cdr/code-server/releases/download/3.2.0/code-server-3.2.0-linux-x86_64.tar.gz && \
-	tar -zxvf code-server-3.2.0-linux-x86_64.tar.gz && \
-	mv code-server-3.2.0-linux-x86_64 code-server && \
-	rm code-server-3.2.0-linux-x86_64.tar.gz && \
+RUN wget https://github.com/cdr/code-server/releases/download/3.3.0/code-server-3.3.0-linux-x86_64.tar.gz && \
+	tar -zxvf code-server-3.3.0-linux-x86_64.tar.gz && \
+	mv code-server-3.3.0-linux-x86_64 code-server && \
+	rm code-server-3.3.0-linux-x86_64.tar.gz && \
 	mv code-server /usr/local/lib/code-server && \
 	ln -s /usr/local/lib/code-server/code-server /usr/local/bin/code-server
 
