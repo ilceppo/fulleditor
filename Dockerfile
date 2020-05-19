@@ -42,7 +42,7 @@ RUN wget https://github.com/cdr/code-server/releases/download/v3.3.1/code-server
 	mv code-server-3.3.1-linux-amd64 code-server && \
 	rm code-server-3.3.1-linux-amd64.tar.gz && \
 	mv code-server /usr/local/lib/code-server && \
-	ln -s /usr/local/lib/code-server/code-server /usr/local/bin/code-server
+	ln -s /usr/local/lib/code-server/bin/code-server /usr/local/bin/code-server
 
 RUN curl -sL https://deb.nodesource.com/setup_12.x | bash -
 RUN apt install -y nodejs
