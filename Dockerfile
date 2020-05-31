@@ -54,10 +54,41 @@ RUN apt install -y php-cgi php-mbstring php-gd php-xml php-cli php-curl php-mysq
 
 RUN apt install -y python3
 
+RUN mkdir /home/go && \
+    mkdir /home/go-tools && \
+    chown -R coder:coder /home/go && \
+    chown -R coder:coder /home/go-tools 
+
+USER coder
+
+WORKDIR /home/coder
+
+ENV GO_VERSION=1.14.3 \
+    GOOS=linux \
+    GOARCH=amd64 \
+    GOROOT=/home/go \
+    GOPATH=/home/go-tools
+ENV PATH=$GOPATH/bin:$GOROOT/bin:$PATH
+
+RUN curl -fsSL https://storage.googleapis.com/golang/go$GO_VERSION.$GOOS-$GOARCH.tar.gz | tar -C /home -xzv
+
+RUN go get -u -v github.com/uudashr/gopkgs/v2/cmd/gopkgs && \
+go get -u -v github.com/ramya-rao-a/go-outline && \
+go get -u -v github.com/mdempsky/gocode && \
+go get -u -v github.com/stamblerre/gocode && \
+go get -u -v github.com/sqs/goreturns && \
+go get -u -v golang.org/x/lint/golint && \
+go get -u -v github.com/codesenberg/bombardier && \
+go get -u -v golang.org/x/tools/cmd/goimports && \
+go get -u -v golang.org/x/tools/gopls
+
+RUN rm -rf $GOPATH/src && \
+    rm -rf $GOPATH/pkg
+
+ENV PATH=$PATH:$GOPATH/bin
+
 EXPOSE 8080
 EXPOSE 8000
 EXPOSE 3000
-USER coder
-WORKDIR /home/coder
 
 ENTRYPOINT ["dumb-init", "fixuid", "-q", "/usr/local/bin/code-server", "--bind-addr", "0.0.0.0:8080",  "."]
