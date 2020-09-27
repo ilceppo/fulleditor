@@ -20,6 +20,7 @@ RUN apt-get update \
     zip \
     unzip \
     iputils-ping \
+    build-essential \
   && rm -rf /var/lib/apt/lists/*
 
 RUN sed -i "s/# en_US.UTF-8/en_US.UTF-8/" /etc/locale.gen && locale-gen
@@ -37,16 +38,17 @@ RUN curl -SsL https://github.com/boxboat/fixuid/releases/download/v0.4/fixuid-0.
     mkdir -p /etc/fixuid && \
     printf "user: coder\ngroup: coder\n" > /etc/fixuid/config.yml
 
-RUN wget https://github.com/cdr/code-server/releases/download/v3.3.1/code-server-3.3.1-linux-amd64.tar.gz && \
-	tar -zxvf code-server-3.3.1-linux-amd64.tar.gz && \
-	mv code-server-3.3.1-linux-amd64 code-server && \
-	rm code-server-3.3.1-linux-amd64.tar.gz && \
+RUN wget https://github.com/cdr/code-server/releases/download/v3.5.0/code-server-3.5.0-linux-amd64.tar.gz && \
+	tar -zxvf code-server-3.5.0-linux-amd64.tar.gz && \
+	mv code-server-3.5.0-linux-amd64 code-server && \
+	rm code-server-3.5.0-linux-amd64.tar.gz && \
 	mv code-server /usr/local/lib/code-server && \
 	ln -s /usr/local/lib/code-server/bin/code-server /usr/local/bin/code-server
 
 RUN curl -sL https://deb.nodesource.com/setup_12.x | bash -
 RUN apt install -y nodejs
 RUN npm install -g firebase-tools
+RUN npm i -g vercel
 
 RUN apt install -y php-cgi php-mbstring php-gd php-xml php-cli php-curl php-mysql php-imagick php-pgsql php-zip php-redis && \
 	curl -sS https://getcomposer.org/installer -o composer-setup.php && \
@@ -63,7 +65,7 @@ USER coder
 
 WORKDIR /home/coder
 
-ENV GO_VERSION=1.14.3 \
+ENV GO_VERSION=1.15.2 \
     GOOS=linux \
     GOARCH=amd64 \
     GOROOT=/home/go \
